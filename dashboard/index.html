@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launch-Odds Radar v10 — which pre-token protocol is worth farming next</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="hero">
+  <div class="hero-gloss"></div>
+  <h1>Launch-Odds Radar <span class="v10">v10</span></h1>
+  <p class="tagline">Which pre-token protocol is worth farming next — ranked by what its launch would be worth, with the steps to farm it.</p>
+  <div class="chips" id="heroChips"></div>
+</header>
+
+<main>
+<section class="kpis" id="kpis" aria-label="Model scorecard"></section>
+
+<div class="strip" id="integrity" aria-label="Integrity strip"></div>
+
+<section class="card controls">
+  <h2>Find your farm</h2>
+  <div class="ctl-row">
+    <label>Search <input id="q" type="search" placeholder="Name or slug…"></label>
+    <label>Verdict
+      <select id="fVerdict"><option value="">All verdicts</option><option value="FARM">FARM only</option><option value="SKIP">SKIP only</option></select>
+    </label>
+    <label>Category <select id="fCat"><option value="">All categories</option></select></label>
+    <label class="check"><input id="fWatch" type="checkbox"> Watchlist only (40)</label>
+    <button id="csvBtn" class="btn">Export CSV</button>
+    <button id="jsonBtn" class="btn alt">Export JSON</button>
+  </div>
+  <div class="sliders">
+    <div class="slider">
+      <label for="depSlider">Deposit size — <b id="depVal"></b></label>
+      <input id="depSlider" type="range">
+      <p class="note" id="depNote"></p>
+    </div>
+    <div class="slider">
+      <label for="gasSlider">Gas per claim — <b id="gasVal"></b></label>
+      <input id="gasSlider" type="range">
+      <p class="note">Gas is the flat $ cost of claiming. Net = expected airdrop − gas − 5% opportunity cost on the deposit.</p>
+    </div>
+  </div>
+  <p class="note" id="countLine"></p>
+</section>
+
+<section class="card" id="boardCard">
+  <h2>Ranked board <span class="sub" id="boardSub"></span></h2>
+  <div class="table-wrap"><table id="board">
+    <thead><tr>
+      <th data-k="rank">#</th><th data-k="name">Protocol</th><th data-k="category">Category</th>
+      <th data-k="tvl_usd">TVL</th><th data-k="change_7d">7d</th><th data-k="implied_value_usd">Implied value</th>
+      <th data-k="implied_lo_usd">Value range</th><th data-k="rank_lo">Rank range</th>
+      <th data-k="verdict">Verdict</th><th data-k="net_usd">Net $</th>
+    </tr></thead>
+    <tbody id="boardBody"></tbody>
+  </table></div>
+  <p class="note">Click any row for its detail view, 10-step farm plan, deposit grid and peers. Ranks shown are the board's ranks, never re-sequenced by a filter.</p>
+</section>
+
+<section class="card detail" id="detail" aria-label="Protocol detail"></section>
+
+<section class="card">
+  <h2>Scatter — size vs predicted ratio</h2>
+  <p class="note">Each dot is a board protocol. Horizontal: log TVL. Vertical: predicted log₁₀(market-cap / TVL). Green dots are FARM verdicts, rose are SKIP. The selected protocol is ringed in indigo.</p>
+  <svg id="scatter" viewBox="0 0 760 380" role="img" aria-label="Scatter of board protocols"></svg>
+  <p class="note" id="scatterNote"></p>
+</section>
+
+<section class="card">
+  <h2>Evidence — the model, tested, misses included</h2>
+  <div id="evidence"></div>
+  <h3>How the number is built</h3>
+  <p id="method"></p>
+  <h3>Ledger — all 758 protocols accounted for</h3>
+  <p id="ledger"></p>
+</section>
+
+<section class="card">
+  <h2>Live tokens — the market's own values, set aside</h2>
+  <p class="note">These protocols already record a token, so the board never ranks them. Their market caps are shown as recorded, not modelled.</p>
+  <div class="table-wrap"><table id="live">
+    <thead><tr><th>Protocol</th><th>Category</th><th>TVL</th><th>Market cap</th><th>7d</th></tr></thead>
+    <tbody id="liveBody"></tbody>
+  </table></div>
+</section>
+</main>
+
+<footer id="footer"></footer>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
